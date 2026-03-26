@@ -100,7 +100,7 @@ const Bestsell = () => {
 
   const fetchArrivals = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/bestsell/best/");
+      const res = await axios.get("https://astrix-backend.onrender.com/bestsell/best/");
       setProducts(res.data.data);
     } catch (error) {
       console.error("Error fetching best selling:", error);

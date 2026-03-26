@@ -18,7 +18,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://127.0.0.1:8000/products/products/");
+        const res = await axios.get("https://astrix-backend.onrender.com/products/products/");
         setProducts(res.data.data);
       } catch (err) {
         console.log(err);

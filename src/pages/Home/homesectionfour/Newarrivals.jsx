@@ -98,7 +98,7 @@ const Newarrivals = () => {
 
   const fetchArrivals = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/newarrivals/arrivals/");
+      const res = await axios.get("https://astrix-backend.onrender.com/newarrivals/arrivals/");
       setProducts(res.data.data);
     } catch (error) {
       console.error("Error fetching arrivals:", error);
