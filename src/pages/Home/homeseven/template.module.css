@@ -1,0 +1,33 @@
+.main{
+    background: url('./pic/video-image.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 90vh;
+    width: 98%;
+    margin: 50px 0px 80px 0px;
+}
+.total{
+    display: flex;
+    justify-content: center;
+}
+.circle{
+    display: flex;
+    justify-content: center;
+    animation: rotateInfinite 25s ease infinite;
+}
+.circ{
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@keyframes rotateInfinite {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
