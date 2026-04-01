@@ -39,7 +39,7 @@ const Nav = () => {
       }
       const res = await axios.post(`https://astrix-backend.onrender.com/register/reg/`, Formdata)
       alert("Registration successful. Please login.");
-
+      console.log(res)
       setIsRegister(false);
       setName("");
       setEmail("");
