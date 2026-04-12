@@ -37,7 +37,7 @@ const Nav = () => {
         password: password,
         confirm_password: confirmpassword
       }
-      const res = await axios.post(`https://astrix-backend.onrender.com/register/reg/`, Formdata)
+      const res = await axios.post(`https://astrix-backend.onrender.com/api/register/reg/`, Formdata)
       alert("Registration successful. Please login.");
       console.log(res)
       setIsRegister(false);
@@ -64,7 +64,7 @@ const Nav = () => {
         password
       };
 
-      const res = await axios.post(`https://astrix-backend.onrender.com/register/login/`, Formdata);
+      const res = await axios.post(`https://astrix-backend.onrender.com/api/register/login/`, Formdata);
       localStorage.setItem('token', res.data.token);
       setShowLogin(false);
       // console.log(res.data);
