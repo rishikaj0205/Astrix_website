@@ -67,11 +67,7 @@ const Nav = () => {
       console.log(res.data);
 
       const res = await axios.post(`https://astrix-backend.onrender.com/api/register/login/`, Formdata);
-      // localStorage.setItem('token', res.data.token);
-
-      // store jwt tokens
-      localStorage.setItem('access', res.data.access);
-      localStorage.setItem('refresh', res.data.refresh);
+      localStorage.setItem('token', res.data.token);
 
       // close popup
       setShowLogin(false);
