@@ -41,6 +41,7 @@ const Nav = () => {
       alert("Registration successful. Please login.");
       console.log(res)
       setIsRegister(false);
+      setShowLogin(true);
       setName("");
       setEmail("");
       setPassword("");
@@ -63,13 +64,27 @@ const Nav = () => {
         email,
         password
       };
+      console.log(res.data);
 
       const res = await axios.post(`https://astrix-backend.onrender.com/api/register/login/`, Formdata);
-      localStorage.setItem('token', res.data.token);
+      // localStorage.setItem('token', res.data.token);
+
+      // store jwt tokens
+      localStorage.setItem('access', res.data.access);
+      localStorage.setItem('refresh', res.data.refresh);
+
+      // close popup
       setShowLogin(false);
-      // console.log(res.data);
+
+      // clear inputs
+      setEmail('');
+      setPassword('');
+
+      alert('Login successful');
+
     } catch (err) {
       console.log(err);
+      alert(err.response?.data?.message || 'Login failed');
     }
   };
 
