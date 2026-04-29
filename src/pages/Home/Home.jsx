@@ -6,6 +6,7 @@ import NewCollection from './Homesectionsecond/NewCollection'
 import Features from './homesectionthird/Features'
 import Bestsell from './homesectionsix/Bestsell'
 import Template from './homeseven/Template'
+import Testimonial from './homeeight/Testimonial'
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
         <Collection/>
         <Bestsell/>
         <Template/>
+        <Testimonial/>
     </div>
   )
 }
