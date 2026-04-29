@@ -22,6 +22,9 @@ const Nav = () => {
   const isHome = location.pathname === "/";
   const isContact = location.pathname === "/contact";
 
+  const [user, setUser] = useState(
+  JSON.parse(localStorage.getItem("user"))
+);
 
 
 
@@ -69,6 +72,9 @@ const Nav = () => {
       const res = await axios.post(`https://astrix-backend.onrender.com/api/register/login/`, Formdata);
       localStorage.setItem('token', res.data.token);
 
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      setUser(res.data.user); // 🔥 important
+
       // close popup
       setShowLogin(false);
 
@@ -84,7 +90,10 @@ const Nav = () => {
     }
   };
 
-
+  const handleLogout = () => {
+  localStorage.removeItem("user"); // remove user
+  setUser(null); // update UI
+};
 
 
 
@@ -105,7 +114,7 @@ const Nav = () => {
           <li><Link to="/">HOME</Link></li>
           <li><Link to="/about">ABOUT</Link></li>
           <li><Link to="/shop">SHOP</Link></li>
-          <li><Link to="/features">FEATURES</Link></li>
+          {/* <li><Link to="/features">FEATURES</Link></li> */}
           <li><Link to="/contact">CONTACT</Link></li>
         </ul>
 
@@ -113,10 +122,20 @@ const Nav = () => {
           className={styles.icons}
           style={{ color: isHome || isContact ? "#fff" : "#000" }}
         >
-          <FaUserCircle
-            onClick={() => setShowLogin(true)}
-            className={styles.userIcon}
-          />
+          {user ? (
+  <div style={{ position: "relative" }}>
+    <span>{user.name}</span>
+
+    <button onClick={handleLogout} style={{ marginLeft: "10px" }}>
+      Logout
+    </button>
+  </div>
+) : (
+  <FaUserCircle
+    onClick={() => setShowLogin(true)}
+    className={styles.userIcon}
+  />
+)}
           <Link to="/wishlist"><FaRegHeart /></Link>
           <Link to="/cart"><FiShoppingBag /></Link>
         </div>
