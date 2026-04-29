@@ -75,7 +75,8 @@
   border: 3px solid #ff4d5a;
 }
 
-/* 📱 Responsive */
+
+
 @media (max-width: 768px) {
   .card {
     width: 220px;
