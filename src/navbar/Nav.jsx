@@ -67,8 +67,6 @@ const Nav = () => {
         email,
         password
       };
-      console.log(res.data);
-
       const res = await axios.post(`https://astrix-backend.onrender.com/api/register/login/`, Formdata);
       localStorage.setItem('token', res.data.token);
 
