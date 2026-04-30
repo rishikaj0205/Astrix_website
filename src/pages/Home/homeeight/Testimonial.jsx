@@ -45,7 +45,7 @@ export default function Testimonial() {
 
       <div className={styles.avatars}>
         {testimonials.map((t, i) => (
-          <img
+          <img alt=""
             key={t.id}
             src={t.avatar}
             onClick={() => setIndex(i)}
