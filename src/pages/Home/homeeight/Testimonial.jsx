@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import styles from "./Testimonial.module.css";
 
 const testimonials = [
-  { id: 1, name: "Anna Estrada", review: "Lorem ipsum dolor sit amet...", avatar: "https://i.pravatar.cc/100?img=47" },
-  { id: 2, name: "Samantha Evans", review: "Lorem ipsum dolor sit amet...", avatar: "https://i.pravatar.cc/100?img=32" },
-  { id: 3, name: "Julie Warren", review: "Lorem ipsum dolor sit amet...", avatar: "https://i.pravatar.cc/100?img=45" },
+  { id: 1, name: "Ananya", review:"Astrix made online shopping effortless. From browsing to checkout, everything was smooth and fast. Highly satisfied!", avatar: "https://i.pravatar.cc/100?img=47" },
+  { id: 2, name: "Samantha Evans", review:"Excellent product quality and quick delivery. The website is very user-friendly and visually appealing.", avatar: "https://i.pravatar.cc/100?img=32" },
+  { id: 3, name: "Julie Warren", review: "One of the best online shopping experiences I’ve had. Great offers, fast service, and reliable support.", avatar: "https://i.pravatar.cc/100?img=45" },
 ];
 
 export default function Testimonial() {
