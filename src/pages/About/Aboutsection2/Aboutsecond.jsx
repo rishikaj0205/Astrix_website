@@ -6,10 +6,10 @@ const Aboutsecond = () => {
     <div className={styles.aboutPage}>
       
       {/* Hero Section */}
-      <section className={styles.hero}>
+      {/* <section className={styles.hero}>
         <h1>ASTRIX</h1>
         <p>Define Your Presence.</p>
-      </section>
+      </section> */}
 
       {/* Our Story */}
       <section className={styles.section}>

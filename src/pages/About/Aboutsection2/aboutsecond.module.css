@@ -3,7 +3,7 @@
   background-color: #f8f6f2;
   color: #111;
 }
-
+/* 
 .hero {
   height: 50vh;
   background: url('./image/home-hero-bg.jpg') center/cover no-repeat;
@@ -23,7 +23,7 @@
 .hero p {
   font-size: 1.2rem;
   margin-top: 10px;
-}
+} */
 
 .section {
   padding: 70px 10%;

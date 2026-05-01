@@ -1,32 +1,29 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaRegHeart, FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import { FiShoppingBag } from "react-icons/fi";
 import { MdCancel } from "react-icons/md";
 import styles from "./nav.module.css";
 import axios from "axios";
-import { useContext } from "react";
 import { StoreContext } from "../context/StoreContext";
 
 const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  // const [showLogin, setShowLogin] = useState(false);
   const { showLogin, setShowLogin } = useContext(StoreContext);
   const [isRegister, setIsRegister] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmpassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmPassword] = useState("");
 
   const location = useLocation();
   const isHome = location.pathname === "/";
   const isContact = location.pathname === "/contact";
+  const isLight = isHome || isContact; // white text pages
 
   const [user, setUser] = useState(
-  JSON.parse(localStorage.getItem("user"))
-);
-
-
+    JSON.parse(localStorage.getItem("user"))
+  );
 
   const Register = async () => {
     if (password !== confirmpassword) {
@@ -34,113 +31,86 @@ const Nav = () => {
       return;
     }
     try {
-      const Formdata = {
-        name: name,
-        email: email,
-        password: password,
-        confirm_password: confirmpassword
-      }
-      const res = await axios.post(`https://astrix-backend.onrender.com/api/register/reg/`, Formdata)
+      const Formdata = { name, email, password, confirm_password: confirmpassword };
+      const res = await axios.post(
+        `https://astrix-backend.onrender.com/api/register/reg/`,
+        Formdata
+      );
       alert("Registration successful. Please login.");
-      console.log(res)
+      console.log(res);
       setIsRegister(false);
       setShowLogin(true);
       setName("");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-
     } catch (err) {
-      console.log(err, 'err')
+      console.log(err, "err");
     }
-  }
-
+  };
 
   const Login = async () => {
     if (!email || !password) {
       alert("Please enter email and password");
       return;
     }
-
     try {
-      const Formdata = {
-        email,
-        password
-      };
-      const res = await axios.post(`https://astrix-backend.onrender.com/api/register/login/`, Formdata);
-      localStorage.setItem('token', res.data.token);
-
+      const Formdata = { email, password };
+      const res = await axios.post(
+        `https://astrix-backend.onrender.com/api/register/login/`,
+        Formdata
+      );
+      localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      setUser(res.data.user); // 🔥 important
-
-      // close popup
+      setUser(res.data.user);
       setShowLogin(false);
-
-      // clear inputs
-      setEmail('');
-      setPassword('');
-
-      alert('Login successful');
-
+      setEmail("");
+      setPassword("");
+      alert("Login successful");
     } catch (err) {
       console.log(err);
-      alert(err.response?.data?.message || 'Login failed');
+      alert(err.response?.data?.message || "Login failed");
     }
   };
 
   const handleLogout = () => {
-  localStorage.removeItem("user"); // remove user
-  setUser(null); // update UI
-};
-
-
+    localStorage.removeItem("user");
+    setUser(null);
+  };
 
   return (
     <>
-      <header className={styles.nav}>
-        <div
-          className={styles.logo}
-          style={{ color: isHome || isContact ? "#fff" : "#000" }}
-        >
-          ASTRIX
-        </div>
+      {/* Single class on header controls ALL child colors via CSS */}
+      <header className={`${styles.nav} ${isLight ? styles.navLight : styles.navDark}`}>
+        <div className={styles.logo}>ASTRIX</div>
 
-        <ul
-          className={`${styles.menu} ${menuOpen ? styles.active : ""}`}
-          style={{ color: isHome || isContact ? "#fff" : "#000" }}
-        >
+        <ul className={`${styles.menu} ${menuOpen ? styles.active : ""}`}>
           <li><Link to="/">HOME</Link></li>
           <li><Link to="/about">ABOUT</Link></li>
           <li><Link to="/shop">SHOP</Link></li>
-          {/* <li><Link to="/features">FEATURES</Link></li> */}
           <li><Link to="/contact">CONTACT</Link></li>
         </ul>
 
-        <div
-          className={styles.icons}
-          style={{ color: isHome || isContact ? "#fff" : "#000" }}
-        >
+        <div className={styles.icons}>
           {user ? (
-  <div style={{ position: "relative" }}>
-    <span>{user.name}</span>
-
-    <button onClick={handleLogout} style={{ marginLeft: "10px" }}>
-      Logout
-    </button>
-  </div>
-) : (
-  <FaUserCircle
-    onClick={() => setShowLogin(true)}
-    className={styles.userIcon}
-  />
-)}
+            <div className={styles.userInfo}>
+              <span>{user.name}</span>
+              <button onClick={handleLogout} className={styles.logoutBtn}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <FaUserCircle
+              onClick={() => setShowLogin(true)}
+              className={styles.userIcon}
+            />
+          )}
           <Link to="/wishlist"><FaRegHeart /></Link>
           <Link to="/cart"><FiShoppingBag /></Link>
         </div>
 
         <div
           className={styles.menuToggle}
-          style={{ color: isHome || isContact ? "#fff" : "#000" }}
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <FaTimes /> : <FaBars />}
@@ -160,22 +130,43 @@ const Nav = () => {
               <MdCancel />
             </button>
 
-            {/* Dynamic Title */}
             <h2>{isRegister ? "Register" : "Login"}</h2>
 
-            {/* Register Extra Field */}
             {isRegister && (
-              <input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)} />
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             )}
 
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
             {isRegister && (
-              <input type="password" placeholder="Confirm Password" value={confirmpassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmpassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
             )}
 
-            <button className={styles.loginBtn} onClick={isRegister ? Register : Login}>
+            <button
+              className={styles.loginBtn}
+              onClick={isRegister ? Register : Login}
+            >
               {isRegister ? "Register" : "Login"}
             </button>
 
@@ -183,22 +174,12 @@ const Nav = () => {
               {isRegister ? (
                 <p>
                   Already have an account?{" "}
-                  <span
-                    onClick={() => setIsRegister(false)}
-                    style={{ cursor: "pointer", color: "blue" }}
-                  >
-                    Login
-                  </span>
+                  <span onClick={() => setIsRegister(false)}>Login</span>
                 </p>
               ) : (
                 <p>
-                  Don’t have an account?{" "}
-                  <span
-                    onClick={() => setIsRegister(true)}
-                    style={{ cursor: "pointer", color: "blue" }}
-                  >
-                    Sign up
-                  </span>
+                  Don't have an account?{" "}
+                  <span onClick={() => setIsRegister(true)}>Sign up</span>
                 </p>
               )}
             </div>
@@ -210,7 +191,6 @@ const Nav = () => {
 };
 
 export default Nav;
-
 
 
 
